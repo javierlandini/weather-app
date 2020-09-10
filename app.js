@@ -2,17 +2,22 @@ require('dotenv').config();
 const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
 
-geocode('rosario', (error, data) => {
+const location = process.argv[2]
+if (!location) {
+    return console.log('Error. You need to provide a location.');
+}
+
+geocode(location, (error, { longitude, latitude, place} = {}) => {
     if (error) {
         console.log(error);
     }
     else {
-        forecast(data.latitude, data.longitude, (error, data) => {
+        forecast(latitude, longitude, (error, forecast_data) => {
             if (error) {
-                console.log(error);
-                return;
+                return console.log(error);
             }
-            console.log(data);
+            console.log(place)
+            console.log(forecast_data);
         })
     }
 });

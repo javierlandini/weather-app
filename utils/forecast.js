@@ -5,7 +5,7 @@ const forecast = (lat, long, callback) => {
     const api_key = process.env.FORECAST_API_KEY;
     const query = lat + "," + long;
     const uri = baseurl + '?access_key=' + api_key + '&query=' + query;
-    request({uri: uri, json: true}, (error, response, body) => {
+    request({uri, json: true}, (error, response, body) => {
         if (error) {
             callback('Unable to connect to forecast API.');
             return;
